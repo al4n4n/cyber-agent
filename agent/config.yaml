@@ -21,6 +21,11 @@ output:
   knowledge_dir: "data/knowledge"
 
 scanner:
+  safe_mode: true
+  rate_limit_per_minute: 60
+  allowlist: []
+  denylist: []
+  generate_findings: true
   targets:
     - program: "example-bug-bounty"
       scope:

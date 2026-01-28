@@ -27,3 +27,7 @@ Edit `agent/config.yaml` to plug in your data sources, LLM, and vector store set
 
 - This is a framework starter. Wire in your preferred LLM/embedding providers (OpenAI, Anthropic, Azure, local, etc.) and storage (pgvector, Qdrant, Pinecone, etc.).
 - The default implementation uses simple, offline placeholders to keep this repo runnable without secrets.
+
+## Design
+
+- [Designing the Ultimate AI-Powered Vulnerability Hunting Agent](docs/ultimate-agent-design.md)

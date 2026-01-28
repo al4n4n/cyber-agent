@@ -1,40 +1,17 @@
 """Heuristic scanner for bug bounty targets."""
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Iterable
-
+from agent.executor import execute_plan
+from agent.models import Finding
+from agent.planner import build_plan
 from agent.rag import KnowledgeBase
-
-
-@dataclass
-class Finding:
-    program: str
-    target: str
-    title: str
-    evidence: str
-    severity: str
-    recommendation: str
-    references: list[str]
+from agent.recon import run_recon
 
 
 def scan_targets(config: dict, knowledge_base: KnowledgeBase) -> list[Finding]:
     findings: list[Finding] = []
-    for target in config["scanner"]["targets"]:
-        program = target["program"]
-        for asset in target["scope"]:
-            query = f"{program} {asset} vulnerability technique"
-            context = knowledge_base.search(query)
-            references = [chunk.source for chunk in context]
-            findings.append(
-                Finding(
-                    program=program,
-                    target=asset,
-                    title="Potential input validation issue",
-                    evidence="Heuristic signals matched past patterns; validate manually.",
-                    severity="Medium",
-                    recommendation="Add strict server-side validation and logging.",
-                    references=references,
-                )
-            )
+    profiles = run_recon(config)
+    for profile in profiles:
+        plan = build_plan(profile, knowledge_base, config)
+        findings.extend(execute_plan(plan, knowledge_base, config))
     return findings
