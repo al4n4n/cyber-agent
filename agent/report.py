@@ -5,7 +5,7 @@ from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
 
-from agent.scanner import Finding
+from agent.models import Finding
 
 
 def write_reports(findings: list[Finding], config: dict) -> None:
