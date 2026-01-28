@@ -1,0 +1,28 @@
+llm:
+  provider: "stub"
+  model: "gpt-4o-mini"
+  api_key_env: "OPENAI_API_KEY"
+
+embeddings:
+  provider: "stub"
+  model: "text-embedding-3-large"
+  api_key_env: "OPENAI_API_KEY"
+
+sources:
+  hackerone_rss: "https://hackerone.com/hacktivity?type=all"
+
+rag:
+  chunk_size: 800
+  chunk_overlap: 100
+  index_path: "data/vector_index.json"
+
+output:
+  reports_dir: "reports"
+  knowledge_dir: "data/knowledge"
+
+scanner:
+  targets:
+    - program: "example-bug-bounty"
+      scope:
+        - "https://example.com"
+      notes: "Replace with real program scope"
